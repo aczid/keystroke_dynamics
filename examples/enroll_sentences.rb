@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 # == Summary
-# This is an example enrollment application set up to collect keystroke dynamics data by letting the user type several scentences.
+# This is an example enrollment application set up to collect keystroke dynamics data by letting the user type several sentences.
 require 'gtk2'
 $:.unshift(File.dirname(__FILE__) + '/../lib')
 require 'rubygems'
@@ -34,9 +34,9 @@ loginbox.pack_start(pass, true, true, 0)
 mainbox.pack_start(loginbox, true, true,0)
 mainbox.show
 
-mainbox.pack_start(Gtk::Label.new("Please type these scentences so I can learn your keystroke dynamics."), true, true, 20)
+mainbox.pack_start(Gtk::Label.new("Please type these sentences so I can learn your keystroke dynamics."), true, true, 20)
 
-scentences = [
+sentences = [
   Gtk::Label.new("Two driven jocks help fax my big quiz."),
   Gtk::Label.new("How quickly daft jumping zebras vex."),
   Gtk::Label.new("The five boxing wizards jump quickly."),
@@ -59,7 +59,7 @@ for i in (0..4)
   entry.set_editable(true)
   ksds[i] = KeystrokeDynamics::Analysis.new
   ksds[i].analyze_keys(entry)
-  mainbox.pack_start(scentences[i],true,true,0)
+  mainbox.pack_start(sentences[i],true,true,0)
   entry.signal_connect_after("key-release-event", ksds[i]) do |w, e, analyzer|
     mean_hold_label.text = "Mean hold: #{analyzer.mean_hold}"
     mean_seek_label.text = "Mean seek: #{analyzer.mean_seek}"

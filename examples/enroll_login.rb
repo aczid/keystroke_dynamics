@@ -35,7 +35,7 @@ loginbox.pack_start(pass, true, true, 0)
 mainbox.pack_start(loginbox, true, true,0)
 mainbox.show
 
-mainbox.pack_start(Gtk::Label.new("Please type your login details 10 times so I can learn they way you type them."), true, true, 20)
+mainbox.pack_start(Gtk::Label.new("Please type your login details 10 times so I can learn your keystroke dynamics."), true, true, 20)
 
 statsbox = Gtk::HBox.new
 mean_hold_label = Gtk::Label.new
