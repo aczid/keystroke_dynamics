@@ -3,24 +3,35 @@
 * FIX (url)
 
 == DESCRIPTION:
+Simple keystroke dynamics analyzer/validator written in Ruby-GTK
 
-FIX (describe your package)
 
-== FEATURES/PROBLEMS:
+== FEATURES:
 
-* FIX (list of features or problems)
+* Analysis holds logic to extract simple biometric information from GTK widgets.
+* Validation holds logic to manage user enrollment, validation and cryptographic functions.
 
-== SYNOPSIS:
-
-  FIX (code sample of usage)
+== EXAMPLES:
+The three included Ruby-GTK examples demonstrate the principle of biometric authentication based on keystroke dynamics. For experimentational purposes, I have created two different examples which establish a metric from a users typing. The first, enroll_scentences.rb, lets you type in 5 pangrams (scentences that hold every letter of the alphabet) to establish your metric. The other, enroll_login.rb, lets you type your login details 10 times. I leave it as an excercise to the user to see which method works best for him or her.
+The login.rb example lets you try out your newly created username, password and keystroke metric on a login screen.
 
 == REQUIREMENTS:
 
-* FIX (list of requirements)
+
+Depends on
+* GTK
+* Ruby GTK bindings
+* Ruby OpenSSL bindings
 
 == INSTALL:
 
-* FIX (sudo gem install, anything else)
+* sudo gem install keystroke_dynamics
+
+If you don't have the Ruby GTK or OpenSSL bindings you should install them through your package manager.
+
+On Debian/Ubuntu:
+* sudo apt-get install libgtk2-ruby
+* sudo apt-get install libopenssl-ruby
 
 == LICENSE:
 
