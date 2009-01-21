@@ -1,6 +1,6 @@
 = keystroke_dynamics
 
-* FIX (url)
+* http://keystroke_dynamics.rubyforge.org/
 
 == DESCRIPTION:
 Simple keystroke dynamics analyzer/validator written in Ruby-GTK
