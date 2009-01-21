@@ -34,7 +34,7 @@ loginbox.pack_start(pass, true, true, 0)
 mainbox.pack_start(loginbox, true, true,0)
 mainbox.show
 
-mainbox.pack_start(Gtk::Label.new("Please type these scentences so I can learn your keyboard dynamics."), true, true, 20)
+mainbox.pack_start(Gtk::Label.new("Please type these scentences so I can learn your keystroke dynamics."), true, true, 20)
 
 scentences = [
   Gtk::Label.new("Two driven jocks help fax my big quiz."),
