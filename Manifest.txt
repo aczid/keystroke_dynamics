@@ -4,7 +4,7 @@ PostInstall.txt
 README.rdoc
 Rakefile
 examples/enroll_login.rb
-examples/enroll_scentences.rb
+examples/enroll_sentences.rb
 examples/login.rb
 lib/keystroke_dynamics.rb
 lib/keystroke_dynamics/analysis.rb
