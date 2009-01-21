@@ -2,5 +2,6 @@
 
 * 1 major enhancement:
   * Made my library into a gem.
-* 1 known bug:
+* 2 known bugs:
   * Paths to analysis and password files must be set through constants before use. The default should use the current path of the requiring file.
+  * Needs specs!
