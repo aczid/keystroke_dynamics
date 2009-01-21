@@ -6,6 +6,8 @@ require 'gtk2'
 $:.unshift(File.dirname(__FILE__) + '/../lib')
 require 'rubygems'
 require 'keystroke_dynamics'
+KeystrokeDynamics::Validation::KSD_DIR = './keystroke_dynamics/'
+KeystrokeDynamics::Validation::PH_FILE = './passwd'
 
 window = Gtk::Window.new
 window.title = "Keystroke dynamics enrollment test application"
