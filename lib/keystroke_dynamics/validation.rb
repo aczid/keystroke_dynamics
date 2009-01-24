@@ -69,7 +69,7 @@ class Validation
         puts "Keystroke dynamics didn't match user #{username} (measuered mean accuracy: #{mean_accuracy}, required mean accuracy: > #{ACCURACY_THRESHOLD})"
         return false
       else
-        puts "Identified user #{username} with mean accuracy of #{mean_accuracy}"
+        puts "Verified user #{username} with mean accuracy of #{mean_accuracy}"
         return true
       end
     elsif pass_hashes[username.to_sym].is_a?(Hash)
