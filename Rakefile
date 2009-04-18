@@ -1,9 +1,12 @@
 %w[rubygems rake rake/clean fileutils newgem rubigen].each { |f| require f }
 require File.dirname(__FILE__) + '/lib/keystroke_dynamics'
+require 'rake'
+require 'rake/testtask'
+require 'rake/rdoctask'
 
 # Generate all the Rake tasks
 # Run 'rake -T' to see list of generated tasks (from gem root directory)
-$hoe = Hoe.new('ksd', KeystrokeDynamics::VERSION) do |p|
+$hoe = Hoe.new('keystroke_dynamics', KeystrokeDynamics::VERSION) do |p|
   p.developer('Aram Verstegen', 'aram@aczid.nl')
   p.changes              = p.paragraphs_of("History.txt", 0..1).join("\n\n")
   p.post_install_message = 'PostInstall.txt' # TODO remove if post-install message not required
