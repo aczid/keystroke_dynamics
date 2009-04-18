@@ -24,5 +24,5 @@ require "keystroke_dynamics/validation"
 # To run the Ruby-GTK examples you will need libgtk2-ruby.
 # The validation functions require libopenssl-ruby.
 module KeystrokeDynamics
-  VERSION = '0.0.2'
+  VERSION = '0.0.3'
 end

@@ -172,9 +172,9 @@ class Analysis
         end
       end
     end
-    if(deviation > MAX_ALLOWED_DEVIATION)
+    if (deviation > MAX_ALLOWED_DEVIATION)
       return 0
-    elsif((0 < deviation) && (deviation < MAX_ALLOWED_DEVIATION))
+    elsif ((0 < deviation) && (deviation < MAX_ALLOWED_DEVIATION))
       return 1-(deviation.to_f/MAX_ALLOWED_DEVIATION)
     else
       return 1
@@ -211,9 +211,9 @@ class Analysis
         stats[key][:hold_total] += keystroke[:hold_time].to_i
         stats[key][:seeks] += 1
         stats[key][:holds] += 1
-        stats[key][:min_seek] = keystroke[:seek_time].to_i if stats[key][:min_seek].to_i > keystroke[:seek_time].to_i
+        stats[key][:min_seek] = keystroke[:seek_time].to_i if (stats[key][:min_seek].to_i > keystroke[:seek_time].to_i) || stats[key][:min_seek].nil?
         stats[key][:max_seek] = keystroke[:seek_time].to_i if stats[key][:max_seek].to_i < keystroke[:seek_time].to_i
-        stats[key][:min_hold] = keystroke[:hold_time].to_i if stats[key][:min_hold].to_i > keystroke[:hold_time].to_i
+        stats[key][:min_hold] = keystroke[:hold_time].to_i if (stats[key][:min_hold].to_i > keystroke[:hold_time].to_i) || stats[key][:min_hold].nil?
         stats[key][:max_hold] = keystroke[:hold_time].to_i if stats[key][:max_hold].to_i < keystroke[:hold_time].to_i
       end
     end
