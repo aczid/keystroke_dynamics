@@ -54,13 +54,18 @@ describe "Analysis#mean_kps" do
   end
 
   it "should return the mean keys per second for an array of characters" do
-    @a.keystrokes = [ {:time_pressed => 0, :character => 'a'}, {:time_pressed => 1000, :character => 'a'}]
+    @a.keystrokes = [ {:time_pressed => 0, :character => 'a'}, {:time_pressed => 1000, :character => 'a'}, {:time_pressed => 2000, :character => 'a'}]
     @a.mean_kps.should == 1
   end
 
   it "should return the mean keys per second for an array of characters" do
-    @a.keystrokes = [ {:time_pressed => 0, :character => 'a'}, {:time_pressed => 999, :character => 'a'}]
+    @a.keystrokes = [ {:time_pressed => 0, :character => 'a'}, {:time_pressed => 500, :character => 'a'}]
     @a.mean_kps.should == 2
+  end
+
+  it "should return the mean keys per second for an array of characters" do
+    @a.keystrokes = [ {:time_pressed => 1000, :character => 'a'}, {:time_pressed => 1500, :character => 'a'}, {:time_pressed => 1999, :character => 'a'}]
+    @a.mean_kps.should == 3
   end
 
 end
@@ -79,8 +84,8 @@ describe "Analysis#mean_hold" do
     @a.mean_hold.should == 1
   end
   it "should return the mean of hold times for two identical characters" do
-    @a.keystrokes = [ {:hold_time => 1, :character => 'a'}, {:hold_time => 5, :character => 'a'}]
-    @a.mean_hold.should == 3
+    @a.keystrokes = [ {:hold_time => 1, :character => 'a'}, {:hold_time => 3, :character => 'a'}]
+    @a.mean_hold.should == 2
   end  
   it "should return the mean of seek times for two different characters" do
     @a.keystrokes = [ {:hold_time => 1, :character => 'a'}, {:hold_time => 5, :character => 'b'}]

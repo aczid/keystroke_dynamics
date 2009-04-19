@@ -91,34 +91,30 @@ class Analysis
     @keystrokes.last
   end
 
-  # Returns mean seek time for all analyzed keystrokes.
-  # Used to display realtime statistics in the application.
-  def mean_seek
+  # Returns mean for a symbol
+  def mean_value(symbol)
     mean = Analysis.metric([@keystrokes])
-    mean_seek = 0 
+    mean_val = 0 
     mean.each_pair do |idx, keystroke|
-      mean_seek += keystroke[:mean_seek].to_i
+      mean_val += keystroke[symbol].to_i
     end
     if mean.size.to_i != 0
-      return (mean_seek.to_i / mean.size.to_i).to_i
+      return (mean_val / mean.size.to_i).to_i
     else
       return 0
     end
   end
 
+  # Returns mean seek time for all analyzed keystrokes.
+  # Used to display realtime statistics in the application.
+  def mean_seek
+    mean_value(:mean_seek)
+  end
+
   # Returns mean hold time for all analyzed keystrokes.
   # Used to display realtime statistics in the application.
   def mean_hold
-    mean = Analysis.metric([@keystrokes])
-    mean_hold = 0 
-    mean.each_pair do |idx, keystroke|
-      mean_hold += keystroke[:mean_hold].to_i
-    end
-    if mean.size.to_i != 0
-      return (mean_hold.to_i / mean.size.to_i).to_i
-    else
-      return 0
-    end
+    mean_value(:mean_hold)
   end
 
   # Returns mean number of keystrokes per second.
@@ -127,11 +123,9 @@ class Analysis
     last = last_keystroke || {}
     first = @keystrokes.first || {}
     time_in_ms = (last[:time_pressed].to_i - first[:time_pressed].to_i).to_f
-    if time_in_ms != 0
-      return (@keystrokes.size.to_f / (((time_in_ms / 999)).to_f)).to_i
-    else
-      return 0
-    end
+    time_in_s = time_in_ms / 1000
+    time_in_s = 1 if time_in_s < 1
+    return (@keystrokes.size.to_f / time_in_s.to_f).to_i
   end
 
   # Returns deviation as an int betwoon 0 and 1.
@@ -141,10 +135,12 @@ class Analysis
   def self.compare_metrics(metric_test, metric_ref)
     deviation = 0
     metric_test.each_pair do |idx,keystroke|
-      if metric_test[idx.to_sym].is_a?(Hash) && metric_ref[idx.to_sym].is_a?(Hash)
+      mtk = metric_test[idx.to_sym]
+      mrk = metric_ref[idx.to_sym]
+      if mtk.is_a?(Hash) && mrk.is_a?(Hash)
         # Deviation will increase by the amount of ms seeks and holds differ from mean.
-        mean_seek_diff = (metric_test[idx.to_sym][:mean_seek].to_i - metric_ref[idx.to_sym][:mean_seek].to_i)
-        mean_hold_diff = (metric_test[idx.to_sym][:mean_hold].to_i - metric_ref[idx.to_sym][:mean_hold].to_i)
+        mean_seek_diff = (mtk[:mean_seek].to_i - mrk[:mean_seek].to_i)
+        mean_hold_diff = (mtk[:mean_hold].to_i - mrk[:mean_hold].to_i)
         if mean_seek_diff > 0
           deviation += mean_seek_diff
         else
@@ -156,20 +152,8 @@ class Analysis
         else
           deviation -= mean_hold_diff
         end
-
-        # Deviation will increase by the amount of ms seeks and holds exceed min/max holds and seeks.
-        if metric_test[idx.to_sym][:mean_hold] < metric_ref[idx.to_sym][:min_hold]
-          deviation += (metric_ref[idx.to_sym][:min_hold] - metric_test[idx.to_sym][:mean_hold]).to_i
-        end
-        if metric_test[idx.to_sym][:mean_hold] > metric_ref[idx.to_sym][:max_hold]
-          deviation += (metric_test[idx.to_sym][:mean_hold] - metric_ref[idx.to_sym][:max_hold]).to_i
-        end
-        if metric_test[idx.to_sym][:mean_seek] < metric_ref[idx.to_sym][:min_seek]
-          deviation += (metric_ref[idx.to_sym][:min_seek] - metric_test[idx.to_sym][:mean_seek]).to_i
-        end
-        if metric_test[idx.to_sym][:mean_seek] > metric_ref[idx.to_sym][:max_seek]
-          deviation += (metric_test[idx.to_sym][:mean_seek] - metric_ref[idx.to_sym][:max_seek]).to_i
-        end
+        deviation += deviation('hold', mtk, mrk)
+        deviation += deviation('seek', mtk, mrk)
       end
     end
     if (deviation > MAX_ALLOWED_DEVIATION)
@@ -178,6 +162,19 @@ class Analysis
       return 1-(deviation.to_f/MAX_ALLOWED_DEVIATION)
     else
       return 1
+    end
+  end
+
+  # Calculates difference in milliseconds of: mean over max or mean under min for a given symbol
+  def self.deviation(symbol, mtk, mrk)
+    # Deviation will increase by the amount of ms seeks and holds exceed min/max holds and seeks.
+    mean_sym = "mean_#{symbol}".to_sym
+    min_sym = "min_#{symbol}".to_sym
+    max_sym = "max_#{symbol}".to_sym
+    if mtk[mean_sym] < mrk[min_sym]
+      return (mrk[min_sym] - mtk[mean_sym]).to_i
+    else
+      return (mtk[mean_sym] - mrk[max_sym]).to_i
     end
   end
 
