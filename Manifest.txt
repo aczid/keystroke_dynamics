@@ -12,7 +12,11 @@ lib/keystroke_dynamics/validation.rb
 script/console
 script/destroy
 script/generate
-spec/keystroke_dynamics_spec.rb
 spec/spec.opts
 spec/spec_helper.rb
+spec/analysis_spec.rb
+spec/validation_spec.rb
 tasks/rspec.rake
+tasks/flay.rake
+tasks/flog.rake
+tasks/heckle.rake

@@ -128,7 +128,7 @@ class Analysis
     first = @keystrokes.first || {}
     time_in_ms = (last[:time_pressed].to_i - first[:time_pressed].to_i).to_f
     if time_in_ms != 0
-      return (@keystrokes.size.to_f / ((time_in_ms / 1000).to_f)).to_i
+      return (@keystrokes.size.to_f / (((time_in_ms / 999)).to_f)).to_i
     else
       return 0
     end
@@ -174,7 +174,7 @@ class Analysis
     end
     if (deviation > MAX_ALLOWED_DEVIATION)
       return 0
-    elsif ((0 < deviation) && (deviation < MAX_ALLOWED_DEVIATION))
+    elsif ((0 < deviation) && (deviation <= MAX_ALLOWED_DEVIATION))
       return 1-(deviation.to_f/MAX_ALLOWED_DEVIATION)
     else
       return 1
