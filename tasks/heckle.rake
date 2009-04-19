@@ -1,6 +1,6 @@
 desc "Heckle each module and class in turn"
 task :heckle => :verify_rcov do
-  root_module = "Celestial"
+  root_module = "KeystrokeDynamics"
   spec_files = FileList['spec/**/*_spec.rb']
 
   current_module, current_method = nil, nil
