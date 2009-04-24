@@ -12,7 +12,7 @@ module KeystrokeDynamics
 # Number of milliseconds allowed to be slower or faster from measured profile.
 # For example, setting this to 1000 means that there can be a total of 1 second deviation in keystroke min/max/mean seeks and holds combined. Having a 1 second deviation would then make the compare_metrics function return 0.
 # This number needs to be increased as the number of compared metrics increases to allow for standard deviation.
-MAX_ALLOWED_DEVIATION = 800
+MAX_ALLOWED_DEVIATION = 0
 
 # == Summary
 # The Analysis class is used to:
