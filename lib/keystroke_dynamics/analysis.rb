@@ -143,15 +143,12 @@ class Analysis
         mean_hold_diff = (mtk[:mean_hold].to_i - mrk[:mean_hold].to_i)
         peak_hold_diff = deviation('hold', mtk, mrk)
         peak_seek_diff = deviation('seek', mtk, mrk)
-        puts "First Deviation: #{deviation}"
         deviation += mean_seek_diff.abs
         deviation += mean_hold_diff.abs
         deviation += peak_seek_diff.abs
         deviation += peak_hold_diff.abs
-        puts "Fifth Deviation: #{deviation}"
       end
     end
-    puts "Final Deviation: #{deviation}"
     if (deviation > MAX_ALLOWED_DEVIATION)
       return 0
     elsif ((0 < deviation) && (deviation <= MAX_ALLOWED_DEVIATION))
