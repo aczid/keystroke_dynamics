@@ -12,7 +12,7 @@ module KeystrokeDynamics
 # Number of milliseconds allowed to be slower or faster from measured profile.
 # For example, setting this to 1000 means that there can be a total of 1 second deviation in keystroke min/max/mean seeks and holds combined. Having a 1 second deviation would then make the compare_metrics function return 0.
 # This number needs to be increased as the number of compared metrics increases to allow for standard deviation.
-MAX_ALLOWED_DEVIATION = 0
+MAX_ALLOWED_DEVIATION = 1500
 
 # == Summary
 # The Analysis class is used to:
@@ -141,21 +141,17 @@ class Analysis
         # Deviation will increase by the amount of ms seeks and holds differ from mean.
         mean_seek_diff = (mtk[:mean_seek].to_i - mrk[:mean_seek].to_i)
         mean_hold_diff = (mtk[:mean_hold].to_i - mrk[:mean_hold].to_i)
-        if mean_seek_diff > 0
-          deviation += mean_seek_diff
-        else
-          deviation -= mean_seek_diff
-        end
-
-        if mean_hold_diff > 0
-          deviation += mean_hold_diff
-        else
-          deviation -= mean_hold_diff
-        end
-        deviation += deviation('hold', mtk, mrk)
-        deviation += deviation('seek', mtk, mrk)
+        peak_hold_diff = deviation('hold', mtk, mrk)
+        peak_seek_diff = deviation('seek', mtk, mrk)
+        puts "First Deviation: #{deviation}"
+        deviation += mean_seek_diff.abs
+        deviation += mean_hold_diff.abs
+        deviation += peak_seek_diff.abs
+        deviation += peak_hold_diff.abs
+        puts "Fifth Deviation: #{deviation}"
       end
     end
+    puts "Final Deviation: #{deviation}"
     if (deviation > MAX_ALLOWED_DEVIATION)
       return 0
     elsif ((0 < deviation) && (deviation <= MAX_ALLOWED_DEVIATION))
@@ -173,9 +169,11 @@ class Analysis
     max_sym = "max_#{symbol}".to_sym
     if mtk[mean_sym] < mrk[min_sym]
       return (mrk[min_sym] - mtk[mean_sym]).to_i
-    else
-      return (mtk[mean_sym] - mrk[max_sym]).to_i
     end
+    if mtk[mean_sym] > mrk[max_sym]
+      return (mtk[max_sym] - mrk[mean_sym]).to_i
+    end
+    return 0
   end
 
   # Calculates mean, min and max seek/hold times per character from an array of keystroke arrays.
