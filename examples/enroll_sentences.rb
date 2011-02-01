@@ -1,9 +1,9 @@
 #!/usr/bin/env ruby
 # == Summary
 # This is an example enrollment application set up to collect keystroke dynamics data by letting the user type several sentences.
+require 'rubygems'
 require 'gtk2'
 $:.unshift(File.dirname(__FILE__) + '/../lib')
-require 'rubygems'
 require 'keystroke_dynamics'
 KeystrokeDynamics::Validation::KSD_DIR = './keystroke_dynamics/'
 KeystrokeDynamics::Validation::PH_FILE = './passwd'

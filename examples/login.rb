@@ -2,9 +2,9 @@
 # == Summary
 # This is an example login application set up to validate keystroke dynamics data.
 
+require 'rubygems'
 require 'gtk2'
 $:.unshift(File.dirname(__FILE__) + '/../lib')
-require 'rubygems'
 require 'keystroke_dynamics'
 KeystrokeDynamics::Validation::KSD_DIR = './keystroke_dynamics/'
 KeystrokeDynamics::Validation::PH_FILE = './passwd'
